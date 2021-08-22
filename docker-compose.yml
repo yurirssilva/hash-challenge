@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+  discountGRPC:
+    image: hashorg/hash-mock-discount-service
+    ports:
+      - "50051:50051"
+  express:
+    build: ./express
+    #env_file:
+    #  - .env
+    environment:
+      GRPC_HOST: 'discountGRPC'
+      GRPC_PORT: 50051
+    ports:
+      - "3000:3000"
+    links:
+      - discountGRPC:discountGRPC
