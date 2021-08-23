@@ -17,8 +17,7 @@ export class CheckoutController {
                 .send();
 
         const res = await checkoutUseCase.execute(products);
-        console.log('res ====> ', res);
-        
+               
         return response.status(201).send(res);
     }
 }

@@ -8,7 +8,7 @@ export class DiscountProvider implements IDiscountProvider {
         const discount: number = await new Promise((resolve, reject) =>
             client.getDiscount(new GetDiscountRequest().setProductid(productId), (err, discount) => {
                 if (err) {
-                    console.log(err);
+                    console.error(err);
                     resolve(0);
                 } else {
                     resolve(discount.getPercentage());
