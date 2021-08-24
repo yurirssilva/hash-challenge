@@ -8,10 +8,11 @@ export class DiscountProvider implements IDiscountProvider {
         const discount: number = await new Promise((resolve, reject) =>
             client.getDiscount(new GetDiscountRequest().setProductid(productId), (err, discount) => {
                 if (err) {
-                    console.error(err);
                     resolve(0);
                 } else {
-                    resolve(discount.getPercentage());
+                    //Arredondando a porcentagem de desconto retornado
+                    resolve(Math.round((discount.getPercentage() + Number.EPSILON) * 100) / 100);
+                    // resolve(discount.getPercentage());
                 }
             })
         )
