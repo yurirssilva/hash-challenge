@@ -7,11 +7,14 @@ services:
       - "50051:50051"
   express:
     build: ./express
-    #env_file:
-    #  - .env
+    # env_file:
+    #  - /express/.env
     environment:
+      PORT: 3000
+      HOST: 127.0.0.1
       GRPC_HOST: 'discountGRPC'
       GRPC_PORT: 50051
+      BF_DATE: '2021-08-24'
     ports:
       - "3000:3000"
     links:

@@ -19,6 +19,7 @@ export class CheckoutUseCase {
             total_discount: 0, // Valor total de descontos
             products: []
         }
+
         response.products = await Promise.all(products.map(async productDTO => {
             let product = await this.productsRepository.findById(productDTO.id)
             if (product) {
@@ -32,9 +33,10 @@ export class CheckoutUseCase {
                 return productResponse;
             }
         }))
+        response.products = response.products.filter(productResponse => productResponse !== null && productResponse !== undefined)
 
         if (Holidays.isBlackFriday()) {
-            let gift = await this.productsRepository.getGift();           
+            let gift = await this.productsRepository.getGift();
             if (_.findIndex(response.products, { is_gift: true }) == -1 && gift)
                 response.products.push(ProductResponseMapper.mapper(gift, 0, 1, true))
         }
